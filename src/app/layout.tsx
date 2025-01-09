@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/navbar";
 import { Poppins } from "next/font/google";
+import AppBar from "@/components/appbar";
+import Header from "@/components/header";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -29,8 +30,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} bg-background text-white`}>
         <div className="md:hidden">
-          <Navbar />
-          {children}
+          <Header />
+          <main>{children}</main>
+          <AppBar />
         </div>
         <div className="hidden md:block text-center">
           Only Supported in mobile devices
