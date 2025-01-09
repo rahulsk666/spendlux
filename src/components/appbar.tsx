@@ -1,55 +1,60 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React from "react";
+import { Card } from "./ui/card";
 import Image from "next/image";
-import IconButton from "./IconButton";
-import { usePathname } from "next/navigation";
-import { linkItems } from "@/constants/navLinks";
-
-type NavId = "home" | "create" | "analytics" | "list";
 
 export default function AppBar() {
-  const [activeNav, setActiveNav] = useState<NavId>("home");
-  const pathName = usePathname();
-
-  useEffect(() => {
-    const currentItem = linkItems.find((item) => item.href === pathName);
-    if (currentItem) setActiveNav(currentItem.id as NavId);
-  }, [pathName]);
-
   return (
-    <nav 
-      className="fixed bottom-2 bg-appbar-primary inset-x-0 flex flex-row rounded-full justify-self-center p-2"
-      role="navigation"
-      aria-label="Main navigation"
-    >
-      {linkItems.map((item) => (
-        <Link
-          key={item.id}
-          href={item.href}
-          className="p-0 rounded-full min-w-fit"
-          aria-current={activeNav === item.id ? "page" : undefined}
+    <div className="fixed bottom-16 max-w-60 max-h-48 inset-x-0 mx-auto z-50">
+      <Card className="border-none rounded-full bg-appbar-primary flex flex-row place-content-center p-1">
+        <div
+          id="home"
+          className="rounded-full w-fit bg-appbar-secondary shadow-black m-1 p-3"
         >
-          <IconButton
-            iconName={item.id as NavId}
-            text={item.label}
-            className="p-0"
-            spanClass="text-xs font-normal"
-            handleNav={setActiveNav}
-            activeNav={activeNav}
-          >
-            <Image
-              src={item.icon}
-              alt={`${item.label} icon`}
-              width={25}
-              height={25}
-              className="p-1"
-              priority={activeNav === item.id}
-            />
-          </IconButton>
-        </Link>
-      ))}
-    </nav>
+          <Image
+            src={`/home.svg`}
+            alt="home"
+            width={30}
+            height={30}
+            style={{ width: "auto" }}
+          />
+        </div>
+        <div
+          id="create"
+          className="rounded-full w-fit bg-appbar-secondary shadow-black m-1 p-3"
+        >
+          <Image
+            src={`/plus.svg`}
+            alt="home"
+            width={30}
+            height={30}
+            style={{ width: "auto" }}
+          />
+        </div>
+        <div
+          id="analytics"
+          className="rounded-full w-fit bg-appbar-secondary shadow-black m-1 p-3"
+        >
+          <Image
+            src={`/bar_chart.svg`}
+            alt="home"
+            width={30}
+            height={30}
+            style={{ width: "auto" }}
+          />
+        </div>
+        <div
+          id="list"
+          className="rounded-full w-fit bg-appbar-secondary shadow-black m-1 p-3"
+        >
+          <Image
+            src={`/list.svg`}
+            alt="home"
+            width={30}
+            height={30}
+            style={{ width: "auto" }}
+          />
+        </div>
+      </Card>
+    </div>
   );
 }

@@ -17,6 +17,10 @@ export default {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        appbar: {
+          primary: "var(--navigation-primary)",
+          secondary: "var(--navigation-secondary)",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
