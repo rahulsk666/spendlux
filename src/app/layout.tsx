@@ -9,12 +9,6 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
-// const montserrat = Montserrat({
-//   subsets: ["latin"],
-//   weight: ["100", "200", "300", "600"],
-//   variable: "--font-montserrat",
-// });
-
 export const metadata: Metadata = {
   title: "Spendlux",
   description: "Finance manager",
@@ -30,7 +24,7 @@ export default function RootLayout({
       <body className={`${poppins.variable} bg-background text-white`}>
         <div className="md:hidden">
           <Navbar />
-          {children}
+          <main>{children}</main>
         </div>
         <div className="hidden md:block text-center">
           Only Supported in mobile devices
