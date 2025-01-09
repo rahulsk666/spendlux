@@ -26,7 +26,7 @@ const chartConfig = {
 export default function semiCircleProgressBar() {
 
   return (
-    <Card className="flex flex-col bg-gradient-to-r from-[##3034424D] from-40% to-[#6076C11F] to-40% text-white border-transparent w-full max-w-sm justify-self-center max-h-52">
+    <Card className="flex flex-col bg-gradient-to-r from-card-gradient-1 from-0% to-card-gradient-2 to-50% text-white border-transparent w-full max-w-sm justify-self-center max-h-52">
       <CardContent className="flex flex-1 items-center pb-0">
         <ChartContainer
           config={chartConfig}
