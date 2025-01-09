@@ -37,5 +37,8 @@
     --transaction-card-symbol-background-2: #6176c21f;
     --text-transaction-red: #ff4f4f;
     --text-transaction-green: #63ff4f;
+    --navigation-primary: #303442;
+    --navigation-secondary: #3c4150;
+
   }
 }
