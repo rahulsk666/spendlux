@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-export default function Navbar (){
+export default function Header (){
   return (
     <div>
       <div className="grid grid-cols-3 text-white">
