@@ -20,6 +20,15 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+          gradient: {
+            "1": "hsla(var(--radial-graph-card-background-1))",
+            "2": "hsla(var(--radial-graph-card-background-2))",
+            "3": "var(--transaction-card-background-1)",
+            "4": "var(--transaction-card-background-2)",
+            "5": "var(--transaction-card-background-3)",
+            "6": "var(--transaction-card-symbol-background-1)",
+            "7": "var(--transaction-card-symbol-background-2)",
+          },
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -54,6 +63,10 @@ export default {
           "3": "hsl(var(--chart-3))",
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
+        },
+        font: {
+          "transaction-red": "var(--text-transaction-red)",
+          "transaction-green": "var(--text-transaction-green)",
         },
       },
       borderRadius: {
