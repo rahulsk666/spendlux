@@ -17,9 +17,12 @@ export default function Home() {
             <Link href={"/"}>View All</Link>
           </div>
         </div>
-        <div className="overflow-auto">
+        <div className="overflow-hidden">
           <TransactionCard success={false} />
           <TransactionCard success={true} />
+          <TransactionCard success={false} />
+          <TransactionCard success={true} />
+          <TransactionCard success={false} />
           <TransactionCard success={false} />
           <TransactionCard success={true} />
           <TransactionCard success={false} />
