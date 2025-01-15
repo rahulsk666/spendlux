@@ -4,7 +4,7 @@ import React from "react";
 // import { Card } from "./ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import IconButton from "./Button";
+import IconButton from "./IconButton";
 
 export default function AppBar() {
   const linkItems = [
@@ -14,7 +14,7 @@ export default function AppBar() {
     { label: "All Transactions", id: "list", icon: "/list.svg", href: "/" },
   ];
   return (
-    <div className="fixed bottom-16 bg-appbar-primary inset-x-0 flex flex-row rounded-full justify-self-center p-3 ">
+    <div className="fixed bottom-2 bg-appbar-primary inset-x-0 flex flex-row rounded-full justify-self-center p-2">
       {linkItems.map((item) => {
         return (
           <Link
@@ -25,7 +25,7 @@ export default function AppBar() {
             <IconButton
               key={item.id}
               text={item.label}
-              className="p-0 m-1"
+              className="p-0"
               spanClass="text-xs font-normal"
             >
               <Image
