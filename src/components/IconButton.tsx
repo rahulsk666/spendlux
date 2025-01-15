@@ -1,66 +1,48 @@
-"use client";
-
-import { useRef, useEffect, useState } from "react";
-
-type NavId = "home" | "create" | "analytics" | "list";
+import { useRef, useState } from "react";
 
 interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  iconName: NavId;
   text: string;
   color?: string;
   className?: string;
   spanClass?: string;
-  activeNav?: NavId;
-  handleNav: (setActiveNav: NavId) => void;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
   children,
-  iconName = "home",
   text,
   color,
-  className,
-  spanClass,
-  handleNav,
-  activeNav = "home",
+  className = "",
+  spanClass = "",
   ...props
 }) => {
+  const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    if (activeNav === iconName && ref.current) {
-      setWidth(ref.current.offsetWidth + 30);
-    } else {
-      setWidth(0);
-    }
-  }, [activeNav, iconName]);
 
   return (
     <button
-      onClick={() => handleNav(iconName)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       className={`
-        flex m-1 p-2 items-center align-middle rounded-full text-white ${
-          activeNav === iconName
-            ? "bg-appbar-blue"
-            : color || "bg-appbar-secondary"
-        } ${className}
+        flex m-1 p-2 items-center align-middle rounded-full
+        text-white 
+        ${hovered ? "bg-appbar-blue" : color || "bg-appbar-secondary"}
+        ${className}
       `}
       {...props}
     >
       {children}
       <div
         style={{
-          width,
+          width: hovered ? (ref.current?.offsetWidth || 0) + 29 : 0,
           height: "30px",
-          minWidth: "0px",
-          opacity: width > 0 ? 1 : 0,
         }}
-        className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out bg-appbar-blue`}
+        className={`overflow-x-hidden transition-all duration-200 ease-linear bg-inherit ${
+          hovered ? "bg-appbar-blue" : color || "bg-appbar-secondary"
+        }`}
       >
-        <span ref={ref} className={`px-0.5 ${spanClass} inline-block`}>
+        <span ref={ref} className={`px-0.5 ${spanClass}`}>
           {text}
         </span>
       </div>
