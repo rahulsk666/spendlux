@@ -1,33 +1,43 @@
-import { useRef, useState } from "react";
+"use client";
+
+import { useRef } from "react";
 
 interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
+  iconName: string;
   text: string;
   color?: string;
   className?: string;
   spanClass?: string;
+  activeNav?: string;
+  handleNav: (setActiveNav: string) => void;
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
   children,
+  iconName = "home",
   text,
   color,
-  className = "",
-  spanClass = "",
+  className,
+  spanClass,
+  handleNav,
+  activeNav = "home",
   ...props
 }) => {
-  const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
-
   return (
     <button
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => handleNav(iconName)}
+      onMouseLeave={() => handleNav(iconName)}
       className={`
         flex m-1 p-2 items-center align-middle rounded-full
         text-white 
-        ${hovered ? "bg-appbar-blue" : color || "bg-appbar-secondary"}
+        ${
+          activeNav == iconName
+            ? "bg-appbar-blue"
+            : color || "bg-appbar-secondary"
+        }
         ${className}
       `}
       {...props}
@@ -35,11 +45,14 @@ const IconButton: React.FC<IconButtonProps> = ({
       {children}
       <div
         style={{
-          width: hovered ? (ref.current?.offsetWidth || 0) + 29 : 0,
+          width:
+            activeNav == iconName ? (ref.current?.offsetWidth || 0) + 30 : 0,
           height: "30px",
         }}
         className={`overflow-x-hidden transition-all duration-200 ease-linear bg-inherit ${
-          hovered ? "bg-appbar-blue" : color || "bg-appbar-secondary"
+          activeNav == iconName
+            ? "bg-appbar-blue"
+            : color || "bg-appbar-secondary"
         }`}
       >
         <span ref={ref} className={`px-0.5 ${spanClass}`}>
