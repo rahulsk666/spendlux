@@ -20,6 +20,7 @@ export default {
         appbar: {
           primary: "var(--navigation-primary)",
           secondary: "var(--navigation-secondary)",
+          blue: "var(--navigation-blue)",
         },
         card: {
           DEFAULT: "hsl(var(--card))",

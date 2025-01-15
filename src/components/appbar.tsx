@@ -1,60 +1,53 @@
-import React from "react";
-import { Card } from "./ui/card";
+"use client";
+
+import React, { useEffect, useState } from "react";
+// import { Card } from "./ui/card";
+import Link from "next/link";
 import Image from "next/image";
+import IconButton from "./IconButton";
 
 export default function AppBar() {
+  const [activeNav, setActiveNav] = useState("profile")
+  const handleNav = (currentNav: string) => {
+    setActiveNav(currentNav);
+  };
+  useEffect(() => {
+    setActiveNav("home");
+  }, []);
+  const linkItems = [
+    { label: "Dashboard", id: "home", icon: "/home.svg", href: "/" },
+    { label: "Add New", id: "create", icon: "/plus.svg", href: "/" },
+    { label: "Analytics", id: "analytics", icon: "/bar_chart.svg", href: "/" },
+    { label: "All Transactions", id: "list", icon: "/list.svg", href: "/" },
+  ];
   return (
-    <div className="fixed bottom-16 max-w-60 max-h-48 inset-x-0 mx-auto z-50">
-      <Card className="border-none rounded-full bg-appbar-primary flex flex-row place-content-center p-1">
-        <div
-          id="home"
-          className="rounded-full w-fit bg-appbar-secondary shadow-black m-1 p-3"
-        >
-          <Image
-            src={`/home.svg`}
-            alt="home"
-            width={30}
-            height={30}
-            style={{ width: "auto" }}
-          />
-        </div>
-        <div
-          id="create"
-          className="rounded-full w-fit bg-appbar-secondary shadow-black m-1 p-3"
-        >
-          <Image
-            src={`/plus.svg`}
-            alt="home"
-            width={30}
-            height={30}
-            style={{ width: "auto" }}
-          />
-        </div>
-        <div
-          id="analytics"
-          className="rounded-full w-fit bg-appbar-secondary shadow-black m-1 p-3"
-        >
-          <Image
-            src={`/bar_chart.svg`}
-            alt="home"
-            width={30}
-            height={30}
-            style={{ width: "auto" }}
-          />
-        </div>
-        <div
-          id="list"
-          className="rounded-full w-fit bg-appbar-secondary shadow-black m-1 p-3"
-        >
-          <Image
-            src={`/list.svg`}
-            alt="home"
-            width={30}
-            height={30}
-            style={{ width: "auto" }}
-          />
-        </div>
-      </Card>
+    <div className="fixed bottom-2 bg-appbar-primary inset-x-0 flex flex-row rounded-full justify-self-center p-2">
+      {linkItems.map((item) => {
+        return (
+          <Link
+            key={item.id}
+            href={item.href}
+            className="p-0 rounded-full min-w-fit"
+          >
+            <IconButton
+              iconName={item.id}
+              text={item.label}
+              className="p-0"
+              spanClass="text-xs font-normal"
+              handleNav={handleNav}
+              activeNav={activeNav}
+            >
+              <Image
+                src={item.icon}
+                alt={item.id}
+                width={25}
+                height={25}
+                className="p-1"
+              />
+            </IconButton>
+          </Link>
+        );
+      })}
     </div>
   );
 }
