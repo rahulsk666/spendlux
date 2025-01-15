@@ -48,11 +48,7 @@ const IconButton: React.FC<IconButtonProps> = ({
               : 0,
           height: "30px",
         }}
-        className={`overflow-x-hidden transition-all duration-200 delay-100 ease-linear bg-inherit ${
-          activeNav == iconName
-            ? "bg-appbar-blue"
-            : color || "bg-appbar-secondary"
-        }`}
+        className={`overflow-x-hidden transition-all duration-200 ease-linear bg-appbar-blue`}
       >
         <span ref={ref} className={`px-0.5 ${spanClass}`}>
           {text}
