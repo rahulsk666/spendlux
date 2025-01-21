@@ -7,14 +7,23 @@ import { linkItems } from "@/constants/navLinks";
 
 export default function Header() {
   const pathName = usePathname();
-  const [pageName, setPageName] = useState("Dashboard");
+  const [pageName, setPageName] = useState({
+    title: "",
+    subtitle: "",
+  });
 
   useEffect(() => {
     linkItems.map((items) => {
       if (items.href == pathName) {
-        setPageName(items.label);
+        setPageName({
+          title: items.title,
+          subtitle: items.subtitle,
+        });
       } else if ("/profile" == pathName) {
-        setPageName("Profile");
+        setPageName({
+          title: "Profile",
+          subtitle: "your",
+        });
       }
     });
   }, [pathName]);
@@ -24,7 +33,7 @@ export default function Header() {
         <div className="col-span-2 text-left text-xs p-5">
           <p className="font-montserrat tracking-wider">Welcome!</p>
           <p>
-            your<span className="font-bold text-lg pl-2">{pageName}</span>
+            {pageName.subtitle}<span className="font-bold text-lg pl-2">{pageName.title}</span>
           </p>
         </div>
         <a href="/profile" className="flex justify-end p-4">
