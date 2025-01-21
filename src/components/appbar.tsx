@@ -1,25 +1,25 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-// import { Card } from "./ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import IconButton from "./IconButton";
+import { usePathname } from "next/navigation";
+import { linkItems } from "@/constants/navLinks";
 
 export default function AppBar() {
-  const [activeNav, setActiveNav] = useState("profile")
+  const [activeNav, setActiveNav] = useState("profile");
   const handleNav = (currentNav: string) => {
     setActiveNav(currentNav);
   };
+  const pathName = usePathname();
   useEffect(() => {
-    setActiveNav("home");
-  }, []);
-  const linkItems = [
-    { label: "Dashboard", id: "home", icon: "/home.svg", href: "/" },
-    { label: "Add New", id: "create", icon: "/plus.svg", href: "/" },
-    { label: "Analytics", id: "analytics", icon: "/bar_chart.svg", href: "/" },
-    { label: "All Transactions", id: "list", icon: "/list.svg", href: "/" },
-  ];
+    linkItems.map((item) => {
+      if (item.href == pathName) {
+        setActiveNav(item.id);
+      }
+    });
+  }, [pathName]);
   return (
     <div className="fixed bottom-2 bg-appbar-primary inset-x-0 flex flex-row rounded-full justify-self-center p-2">
       {linkItems.map((item) => {
