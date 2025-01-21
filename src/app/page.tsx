@@ -1,5 +1,3 @@
-"use client";
-
 import SemiCircleProgressBar from "@/components/semiCircleProgressBar";
 import TransactionCard from "@/components/transactionCard";
 import Link from "next/link";
@@ -17,7 +15,7 @@ export default function Home() {
             <Link href={"/"}>View All</Link>
           </div>
         </div>
-        <div className="overflow-hidden">
+        <div>
           <TransactionCard success={false} />
           <TransactionCard success={true} />
           <TransactionCard success={false} />
