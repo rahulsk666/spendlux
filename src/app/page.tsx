@@ -17,7 +17,7 @@ export default function Home() {
             <Link href={"/"}>View All</Link>
           </div>
         </div>
-        <div className="overflow-auto">
+        <div>
           <TransactionCard success={false} />
           <TransactionCard success={true} />
           <TransactionCard success={false} />

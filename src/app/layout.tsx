@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} bg-background text-white`}>
+      <body className={`${poppins.variable} bg-background text-white overflow-y-hidden`}>
         <div className="md:hidden">
           <Header />
           <main>{children}</main>
