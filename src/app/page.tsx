@@ -1,5 +1,3 @@
-"use client";
-
 import SemiCircleProgressBar from "@/components/semiCircleProgressBar";
 import TransactionCard from "@/components/transactionCard";
 import Link from "next/link";
