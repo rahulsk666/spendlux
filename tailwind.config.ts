@@ -34,6 +34,12 @@ export default {
             "7": "var(--transaction-card-symbol-background-2)",
           },
         },
+        form: {
+          background: {
+            "1": "var(--form-background-1)",
+            "2": "var(--form-background-2)",
+          },
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -58,8 +64,8 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
+        border: "var(--border)",
+        input: "var(--input)",
         ring: "hsl(var(--ring))",
         chart: {
           "1": "hsl(var(--chart-1))",
