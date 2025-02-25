@@ -5,26 +5,13 @@ import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [{ month: "january", desktop: 20000, mobile: 10000 }];
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig;
+import { chartConfig, chartData } from "@/constants/chartConstants";
 
 export default function semiCircleProgressBar() {
-
   return (
     <Card className="flex flex-col bg-gradient-to-r from-card-gradient-1 from-0% to-card-gradient-2 to-50% text-white border-transparent w-full max-w-sm justify-self-center max-h-52">
       <CardContent className="flex flex-1 items-center pb-0">
@@ -97,13 +84,8 @@ export default function semiCircleProgressBar() {
               />
             </PolarRadiusAxis>
             <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="0%"
-                  stopColor="#7EFF64"
-                  stopOpacity={1}
-                  strokeLinejoin="round"
-                />
+              <linearGradient id="fillDesktop" x1="1" y1="1" x2="0" y2="1">
+                <stop offset="50%" stopColor="#7EFF64" stopOpacity={1} />
                 <stop offset="100%" stopColor="#00BA16" stopOpacity={0.9} />
               </linearGradient>
               <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
