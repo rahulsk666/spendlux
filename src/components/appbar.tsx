@@ -7,25 +7,32 @@ import IconButton from "./IconButton";
 import { usePathname } from "next/navigation";
 import { linkItems } from "@/constants/navLinks";
 
+type NavId = "home" | "create" | "analytics" | "list";
+
 export default function AppBar() {
-  const [activeNav, setActiveNav] = useState("");
+  const [activeNav, setActiveNav] = useState<NavId>("home");
   const pathName = usePathname();
 
   useEffect(() => {
     const currentItem = linkItems.find((item) => item.href === pathName);
-    if (currentItem) setActiveNav(currentItem.id);
+    if (currentItem) setActiveNav(currentItem.id as NavId);
   }, [pathName]);
 
   return (
-    <div className="fixed bottom-2 bg-appbar-primary inset-x-0 flex flex-row rounded-full justify-self-center p-2">
+    <nav 
+      className="fixed bottom-2 bg-appbar-primary inset-x-0 flex flex-row rounded-full justify-self-center p-2"
+      role="navigation"
+      aria-label="Main navigation"
+    >
       {linkItems.map((item) => (
         <Link
           key={item.id}
           href={item.href}
           className="p-0 rounded-full min-w-fit"
+          aria-current={activeNav === item.id ? "page" : undefined}
         >
           <IconButton
-            iconName={item.id}
+            iconName={item.id as NavId}
             text={item.label}
             className="p-0"
             spanClass="text-xs font-normal"
@@ -34,14 +41,15 @@ export default function AppBar() {
           >
             <Image
               src={item.icon}
-              alt={item.id}
+              alt={`${item.label} icon`}
               width={25}
               height={25}
               className="p-1"
+              priority={activeNav === item.id}
             />
           </IconButton>
         </Link>
       ))}
-    </div>
+    </nav>
   );
 }
