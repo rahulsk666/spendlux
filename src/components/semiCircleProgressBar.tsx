@@ -17,13 +17,15 @@ export default function semiCircleProgressBar() {
       <CardContent className="flex flex-1 items-center pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square w-full max-w-[250px]"
+          className="mx-auto aspect-square w-full max-w-[250px] min-h-[250px]"
         >
           <RadialBarChart
             data={chartData}
             endAngle={180}
             innerRadius={80}
             outerRadius={130}
+            width={250}
+            height={250}
           >
             <ChartTooltip
               cursor={false}
@@ -33,46 +35,48 @@ export default function semiCircleProgressBar() {
               <Label
                 content={({ viewBox }) => {
                   if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    const centerX = viewBox.cx || 125;
+                    const centerY = viewBox.cy || 125;
                     return (
-                      <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
+                      <text x={centerX} y={centerY} textAnchor="middle">
                         <tspan
-                          x={127}
-                          y={(viewBox.cy || 0) - 48}
+                          x={centerX}
+                          y={centerY - 50}
                           className="fill-white text-[8px] font-light"
                         >
                           75%
                         </tspan>
                         <tspan
-                          x={127}
-                          y={(viewBox.cy || 0) - 35}
+                          x={centerX}
+                          y={centerY - 35}
                           className="fill-white text-[8px] font-light"
                         >
                           you have spent
                         </tspan>
                         <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) - 14}
+                          x={centerX}
+                          y={centerY - 15}
                           className="fill-white text-lg font-bold"
                         >
                           $ 20000
                         </tspan>
                         <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 4}
+                          x={centerX}
+                          y={centerY + 5}
                           className="fill-white text-[10px] font-light"
                         >
                           of $30000
                         </tspan>
                         <tspan
-                          x={(viewBox.cx || 0) - 25}
-                          y={(viewBox.cy || 0) + 40}
+                          x={centerX - 30}
+                          y={centerY + 40}
                           className="fill-white text-[8px] font-light"
                         >
                           safe to spend
                         </tspan>
                         <tspan
-                          x={(viewBox.cx || 0) + 28}
-                          y={(viewBox.cy || 0) + 43}
+                          x={centerX + 30}
+                          y={centerY + 40}
                           className="fill-white text-lg font-bold"
                         >
                           $ 250
@@ -80,6 +84,7 @@ export default function semiCircleProgressBar() {
                       </text>
                     );
                   }
+                  return null;
                 }}
               />
             </PolarRadiusAxis>
