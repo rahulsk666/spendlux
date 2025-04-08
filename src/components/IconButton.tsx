@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 
-type NavId = "home" | "create" | "analytics" | "list";
+type NavId = "home" | "create" | "analytics" | "list" | "";
 
 interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -31,7 +31,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
-    if (activeNav === iconName && ref.current) {
+    if (activeNav === iconName && activeNav !== "" && ref.current) {
       setWidth(ref.current.offsetWidth + 30);
     } else {
       setWidth(0);
@@ -43,7 +43,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       onClick={() => handleNav(iconName)}
       className={`
         flex m-1 p-2 items-center align-middle rounded-full text-white ${
-          activeNav === iconName
+          activeNav === iconName && activeNav !== ""
             ? "bg-appbar-blue"
             : color || "bg-appbar-secondary"
         } ${className}
@@ -55,12 +55,11 @@ const IconButton: React.FC<IconButtonProps> = ({
         style={{
           width,
           height: "30px",
-          minWidth: "0px",
-          opacity: width > 0 ? 1 : 0,
+          transition: "width 0.3s ease-in-out",
         }}
-        className={`overflow-hidden whitespace-nowrap transition-all duration-300 ease-in-out bg-appbar-blue`}
+        className="overflow-x-hidden bg-appbar-blue"
       >
-        <span ref={ref} className={`px-0.5 ${spanClass} inline-block`}>
+        <span ref={ref} className={`px-0.5 ${spanClass}`}>
           {text}
         </span>
       </div>
