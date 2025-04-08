@@ -7,15 +7,19 @@ import IconButton from "./IconButton";
 import { usePathname } from "next/navigation";
 import { linkItems } from "@/constants/navLinks";
 
-type NavId = "home" | "create" | "analytics" | "list";
+type NavId = "home" | "create" | "analytics" | "list" | "";
 
 export default function AppBar() {
-  const [activeNav, setActiveNav] = useState<NavId>("home");
   const pathName = usePathname();
+  const [activeNav, setActiveNav] = useState<NavId>("");
 
   useEffect(() => {
-    const currentItem = linkItems.find((item) => item.href === pathName);
-    if (currentItem) setActiveNav(currentItem.id as NavId);
+    if (pathName === "/profile") {
+      setActiveNav("");
+    } else {
+      const currentItem = linkItems.find((item) => item.href === pathName);
+      if (currentItem) setActiveNav(currentItem.id as NavId);
+    }
   }, [pathName]);
 
   return (
