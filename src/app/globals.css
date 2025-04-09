@@ -42,5 +42,7 @@
     --navigation-blue: #007aff;
     --form-background-1: #303442e5;
     --form-background-2: #23283ae5;
+    --pagination-background: #303442;
+    --pagination-active: #007aff;
   }
 }

@@ -1,3 +1,4 @@
+import { hover } from "framer-motion";
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
@@ -78,6 +79,10 @@ export default {
         font: {
           "transaction-red": "var(--text-transaction-red)",
           "transaction-green": "var(--text-transaction-green)",
+        },
+        pagination: {
+          background: "var(--pagination-background)",
+          active: "var(--pagination-active)",
         },
       },
       borderRadius: {
