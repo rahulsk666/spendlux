@@ -7,7 +7,7 @@ import IconButton from "./IconButton";
 import { usePathname } from "next/navigation";
 import { linkItems } from "@/constants/navLinks";
 
-type NavId = "home" | "create" | "analytics" | "list" | "";
+type NavId = "home" | "create" | "analytics" | "transactions" | "";
 
 export default function AppBar() {
   const pathName = usePathname();
