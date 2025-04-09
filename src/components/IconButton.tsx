@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 
-type NavId = "home" | "create" | "analytics" | "list" | "";
+type NavId = "home" | "create" | "analytics" | "transactions" | "";
 
 interface IconButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
