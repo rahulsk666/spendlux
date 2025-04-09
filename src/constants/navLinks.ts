@@ -25,9 +25,9 @@ export const linkItems = [
   },
   {
     label: "All Transactions",
-    id: "list",
+    id: "transactions",
     icon: "/list.svg",
-    href: "/list",
+    href: "/transactions",
     title: "Transactions",
     subtitle: "all",
   },
