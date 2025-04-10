@@ -4,9 +4,11 @@ import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { usePathname } from "next/navigation";
 import { linkItems } from "@/constants/navLinks";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Header() {
   const pathName = usePathname();
+  const { user, loading } = useAuth();
   const [pageName, setPageName] = useState({
     title: "",
     subtitle: "",
@@ -27,6 +29,7 @@ export default function Header() {
       }
     });
   }, [pathName]);
+
   return (
     <div>
       <div className="grid grid-cols-3 text-white">
@@ -37,10 +40,16 @@ export default function Header() {
           </p>
         </div>
         <a href="/profile" className="flex justify-end p-4">
-          <Avatar className="w-12 h-12">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          {loading ? (
+            <div className="w-12 h-12 rounded-full bg-gray-700 animate-pulse"></div>
+          ) : (
+            <Avatar className="w-12 h-12">
+              <AvatarImage src={user?.photoURL || undefined} />
+              <AvatarFallback>
+                {user?.displayName?.charAt(0) || user?.email?.charAt(0) || 'U'}
+              </AvatarFallback>
+            </Avatar>
+          )}
         </a>
       </div>
     </div>
