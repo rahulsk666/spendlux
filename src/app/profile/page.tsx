@@ -1,7 +1,32 @@
+'use client';
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { deleteCookie } from "cookies-next";
 import React from "react";
 
 export default function Profile() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      // Sign out from Firebase
+      await signOut(auth);
+      
+      // Clear the session cookie
+      deleteCookie('session', {
+        path: '/',
+      });
+
+      // Use Next.js router to navigate
+      router.replace('/login');
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
   return (
     <div className="justify-self-center">
       <div className="rounded p-4 m-3">
@@ -16,7 +41,12 @@ export default function Profile() {
           <span>john.doe@example.com</span>
         </div>
         <div className="mt-6 p-3 px-5 text-center bg-appbar-blue rounded-full">
-          <button className="font-semibold text-xs">logout</button>
+          <button 
+            onClick={handleLogout}
+            className="font-semibold text-xs"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
