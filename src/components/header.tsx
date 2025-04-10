@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { usePathname } from "next/navigation";
 import { linkItems } from "@/constants/navLinks";
 import { useAuth } from "@/context/AuthContext";
+import { HeaderSkeleton } from "./header-skeleton";
 
 export default function Header() {
   const pathName = usePathname();
@@ -30,13 +31,23 @@ export default function Header() {
     });
   }, [pathName]);
 
+  if (loading) {
+    return <HeaderSkeleton />;
+  }
+
   return (
     <div>
       <div className="grid grid-cols-3 text-white">
         <div className="col-span-2 text-left text-xs p-5">
-          <p className="font-montserrat tracking-wider">Welcome!</p>
+          <p className="font-montserrat tracking-wider">
+            Welcome!
+            <span className="font-bold text-base pl-1">
+              {user?.displayName || "User"}
+            </span>
+          </p>
           <p>
-            {pageName.subtitle}<span className="font-bold text-lg pl-2">{pageName.title}</span>
+            {pageName.subtitle}
+            <span className="font-bold text-lg pl-2">{pageName.title}</span>
           </p>
         </div>
         <a href="/profile" className="flex justify-end p-4">
@@ -46,7 +57,7 @@ export default function Header() {
             <Avatar className="w-12 h-12">
               <AvatarImage src={user?.photoURL || undefined} />
               <AvatarFallback>
-                {user?.displayName?.charAt(0) || user?.email?.charAt(0) || 'U'}
+                {user?.displayName?.charAt(0) || user?.email?.charAt(0) || "U"}
               </AvatarFallback>
             </Avatar>
           )}
