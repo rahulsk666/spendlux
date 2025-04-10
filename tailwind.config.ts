@@ -1,4 +1,3 @@
-import { hover } from "framer-motion";
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
