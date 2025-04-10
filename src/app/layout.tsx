@@ -1,7 +1,8 @@
-import "./globals.css";
 import { Poppins } from "next/font/google";
+import "./globals.css";
 import ClientLayout from "./client-layout";
 import { metadata } from "./metadata";
+import { AuthProvider } from "@/context/AuthContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -19,7 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} bg-background text-white overflow-y-hidden`}>
-        <ClientLayout>{children}</ClientLayout>
+        <AuthProvider>
+          <ClientLayout>
+            {children}
+          </ClientLayout>
+        </AuthProvider>
       </body>
     </html>
   );
