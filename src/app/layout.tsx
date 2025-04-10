@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google";
-import AppBar from "@/components/appbar";
-import Header from "@/components/header";
+import ClientLayout from "./client-layout";
+import { metadata } from "./metadata";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -10,10 +9,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
-export const metadata: Metadata = {
-  title: "Spendlux",
-  description: "Finance manager",
-};
+export { metadata };
 
 export default function RootLayout({
   children,
@@ -23,14 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} bg-background text-white overflow-y-hidden`}>
-        <div className="md:hidden">
-          <Header />
-          <main>{children}</main>
-          <AppBar />
-        </div>
-        <div className="hidden md:block text-center">
-          Only Supported in mobile devices
-        </div>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
