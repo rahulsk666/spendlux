@@ -21,8 +21,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    --input: #3c4150;
+    --ring: #383d4b;
     --chart-1: 173 58% 39%;
     --chart-2: 12 76% 61%;
     --chart-3: 197 37% 24%;
@@ -39,6 +39,8 @@
     --text-transaction-green: #63ff4f;
     --navigation-primary: #303442;
     --navigation-secondary: #3c4150;
-
+    --navigation-blue: #007aff;
+    --form-background-1: #303442e5;
+    --form-background-2: #23283ae5;
   }
 }
