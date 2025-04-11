@@ -1,4 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { deleteCookie } from "cookies-next";
+import { useAuth } from "@/context/AuthContext";
+import { ProfileSkeleton } from "@/components/profile-skeleton";
 import React from "react";
 
 export default function Profile() {

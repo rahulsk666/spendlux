@@ -1,6 +1,12 @@
 export const linkItems = [
-  { label: "Dashboard", id: "home", icon: "/home.svg", href: "/" },
-  { label: "Add New", id: "create", icon: "/plus.svg", href: "/create" },
+  {
+    label: "Dashboard",
+    id: "home",
+    icon: "/home.svg",
+    href: "/",
+    title: "Dashboard",
+    subtitle: "your",
+  },
   {
     label: "Analytics",
     id: "analytics",
