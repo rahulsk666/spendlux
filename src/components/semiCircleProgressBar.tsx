@@ -9,15 +9,47 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { chartConfig, chartData } from "@/constants/chartConstants";
+import { chartConfig } from "@/constants/chartConstants";
 
-export default function semiCircleProgressBar() {
+interface SemiCircleProgressBarProps {
+  totalAmount: number;
+  spentAmount: number;
+  safeToSpend: number;
+  className?: string;
+}
+
+interface ChartDataItem {
+  name: string;
+  mobile: number;
+  desktop: number;
+}
+
+export function SemiCircleProgressBar({
+  totalAmount,
+  spentAmount,
+  safeToSpend,
+  className,
+}: SemiCircleProgressBarProps) {
+  const percentage = Math.round((spentAmount / totalAmount) * 100);
+  
+  const chartData: ChartDataItem[] = [
+    {
+      name: "Progress",
+      mobile: percentage * 0.4, // Background layer
+      desktop: percentage * 0.6, // Foreground layer
+    },
+  ];
+
   return (
-    <Card className="flex flex-col bg-gradient-to-r from-card-gradient-1 from-0% to-card-gradient-2 to-50% text-white border-transparent w-full max-w-sm justify-self-center max-h-52">
+    <Card 
+      className={`flex flex-col bg-gradient-to-r from-card-gradient-1 from-0% to-card-gradient-2 to-50% text-white border-transparent w-full max-w-sm justify-self-center max-h-52 ${className}`}
+      role="figure"
+      aria-label={`Progress indicator showing ${percentage}% spent of total budget`}
+    >
       <CardContent className="flex flex-1 items-center pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square w-full max-w-[250px] min-h-[250px]"
+          className="mx-auto w-[250px] h-[250px] min-w-[250px] min-h-[250px]"
         >
           <RadialBarChart
             data={chartData}
@@ -44,7 +76,7 @@ export default function semiCircleProgressBar() {
                           y={centerY - 50}
                           className="fill-white text-[8px] font-light"
                         >
-                          75%
+                          {percentage}%
                         </tspan>
                         <tspan
                           x={centerX}
@@ -58,14 +90,14 @@ export default function semiCircleProgressBar() {
                           y={centerY - 15}
                           className="fill-white text-lg font-bold"
                         >
-                          $ 20000
+                          $ {spentAmount.toLocaleString()}
                         </tspan>
                         <tspan
                           x={centerX}
                           y={centerY + 5}
                           className="fill-white text-[10px] font-light"
                         >
-                          of $30000
+                          of ${totalAmount.toLocaleString()}
                         </tspan>
                         <tspan
                           x={centerX - 30}
@@ -79,7 +111,7 @@ export default function semiCircleProgressBar() {
                           y={centerY + 40}
                           className="fill-white text-lg font-bold"
                         >
-                          $ 250
+                          $ {safeToSpend.toLocaleString()}
                         </tspan>
                       </text>
                     );
