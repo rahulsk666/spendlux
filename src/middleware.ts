@@ -2,6 +2,15 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
+  // Skip middleware for public assets and images
+  if (request.nextUrl.pathname.startsWith('/_next') || 
+      request.nextUrl.pathname.startsWith('/images') ||
+      request.nextUrl.pathname.endsWith('.png') ||
+      request.nextUrl.pathname.endsWith('.svg') ||
+      request.nextUrl.pathname.endsWith('.ico')) {
+    return NextResponse.next();
+  }
+
   // Get the session token from cookies
   const session = request.cookies.get('session')?.value;
 
