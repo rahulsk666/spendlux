@@ -22,12 +22,15 @@ export const CATEGORIES = [
 interface AddTransactionDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  className?: string;
 }
 
-export function AddTransactionDialog({ open, onOpenChange }: AddTransactionDialogProps) {
+export function AddTransactionDialog({ open, onOpenChange, className }: AddTransactionDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="h-[550px] bg-[#1F2937]/90 border-none rounded-t-2xl p-0">
+      <DialogContent
+        className={`h-[550px] bg-[#1F2937]/90 border-none rounded-t-2xl p-0 ${className}`}
+      >
         <div className="flex flex-col h-full">
           {/* Handle bar */}
           <div className="flex justify-center pt-3">
@@ -105,4 +108,4 @@ export function AddTransactionDialog({ open, onOpenChange }: AddTransactionDialo
       </DialogContent>
     </Dialog>
   );
-} 
+}

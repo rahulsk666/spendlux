@@ -56,6 +56,7 @@ export default function Home() {
       <AddTransactionDialog
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
+        className="transition-transform duration-300 ease-in-out transform"
       />
     </section>
   );
