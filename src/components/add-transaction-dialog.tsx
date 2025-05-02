@@ -1,17 +1,32 @@
 "use client";
 
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "./ui/form";
+import { useForm } from "react-hook-form";
+import { DateTimePicker } from "./date-time-picker/date-time-picker";
+import { Textarea } from "./ui/textarea";
 import {
   Select,
   SelectContent,
+  SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { SelectItem } from "@radix-ui/react-select";
-import Datepicker from "@/components/datepicker";
-import { Button } from "@/components/ui/button";
+} from "./ui/select";
 
 export const CATEGORIES = [
   { value: "travel", label: "Travel" },
@@ -25,86 +40,168 @@ interface AddTransactionDialogProps {
   className?: string;
 }
 
-export function AddTransactionDialog({ open, onOpenChange, className }: AddTransactionDialogProps) {
+const formSchema = z.object({
+  title: z.string().min(2).max(20),
+  description: z.string().min(2).max(50),
+  fromDate: z.date(),
+  toDate: z.date(),
+  category: z.enum(
+    CATEGORIES.map((category) => category.value) as [string, ...string[]]
+  ),
+  amount: z.number().min(1).max(1000000),
+});
+
+export function AddTransactionDialog({
+  open,
+  onOpenChange,
+  className,
+}: AddTransactionDialogProps) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      amount: 0,
+      category: undefined,
+      fromDate: undefined,
+      toDate: undefined,
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className={`h-[550px] bg-[#1F2937]/90 border-none rounded-t-2xl p-0 ${className}`}
+        className={`h-auto bg-[#1F2937]/90 border-none ${className}`}
       >
-        <div className="flex flex-col h-full">
-          {/* Handle bar */}
-          <div className="flex justify-center pt-3">
-            <div className="w-12 h-1 bg-white/20 rounded-full" />
-          </div>
-
-          <div className="px-6 py-3">
-            <DialogTitle className="text-lg font-bold text-white">
-              Add New Transaction
-            </DialogTitle>
-            <DialogDescription className="sr-only">
-              Form to add a new transaction with fields for title, description, amount, category, and dates.
-            </DialogDescription>
-          </div>
-
-          <form action="" className="flex-1 overflow-y-auto p-2 space-y-3">
-            <div>
-              <Input
-                name="title"
-                className="w-full rounded-full bg-white/[0.07] border-0 text-white/90 h-9 px-6 placeholder:text-white/40 focus-visible:ring-0 focus-visible:ring-offset-0"
-                placeholder="Enter Title"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <DialogHeader>
+              <DialogTitle className="text-lg font-bold text-left text-white">
+                Add New Transaction
+              </DialogTitle>
+            </DialogHeader>
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input className="bg-slate-900" placeholder="Enter Title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter Description"
+                      {...field}
+                      className="resize-none bg-slate-900"
+                      rows={3}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                    className="bg-slate-900"
+                      type="number"
+                      placeholder="Enter Amount"
+                      {...field}
+                      value={field.value || ""}
+                      onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className=" bg-slate-900 text-white">
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="bg-slate-900 text-white">
+                      {CATEGORIES.map((category) => (
+                        <SelectItem key={category.value} value={category.value}>
+                          {category.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* <div className="flex flex-row gap-1"> */}
+              <FormField
+                control={form.control}
+                name="fromDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <DateTimePicker
+                        placeholder="Expenses from.."
+                        date={field.value}
+                        setDate={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <div>
-              <Textarea
-                name="description"
-                placeholder="Enter Description"
-                className="resize-none bg-white/[0.07] border-0 text-white/90 rounded-2xl min-h-[80px] px-6 py-4 placeholder:text-white/40 focus-visible:ring-0 focus-visible:ring-offset-0"
+              <FormField
+                control={form.control}
+                name="toDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <DateTimePicker
+                        placeholder="Expenses to.."
+                        date={field.value}
+                        setDate={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <div>
-              <Input
-                name="amount"
-                className="w-full rounded-full bg-white/[0.07] border-0 text-white/90 h-9 px-6 placeholder:text-white/40 focus-visible:ring-0 focus-visible:ring-offset-0"
-                placeholder="Enter Amount"
-              />
-            </div>
-            <div>
-              <Select name="category">
-                <SelectTrigger className="w-full rounded-full bg-white/[0.07] border-0 text-white/90 h-9 px-6 placeholder:text-white/40 focus:ring-0 focus:ring-offset-0">
-                  <SelectValue placeholder="Enter Category" className="text-white/40" />
-                </SelectTrigger>
-                <SelectContent className="bg-[#1F2937] border-none text-white/90">
-                  {CATEGORIES?.map((category) => (
-                    <SelectItem 
-                      key={category.value} 
-                      value={category.value}
-                      className="focus:bg-white/10 focus:text-white"
-                    >
-                      {category.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex gap-3">
-              <div className="flex-1">
-                <Datepicker />
-              </div>
-              <div className="flex-1">
-                <Datepicker />
-              </div>
-            </div>
-          </form>
-
-          <div className="p-6 mt-auto border-t border-white/[0.06]">
-            <Button
-              className="w-full h-11 bg-[#007AFF] hover:bg-[#007AFF]/90 rounded-full text-base font-medium"
-              type="submit"
-            >
+            {/* </div> */}
+            <Button type="submit" className="w-full bg-blue-600">
               Submit
             </Button>
-          </div>
-        </div>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
