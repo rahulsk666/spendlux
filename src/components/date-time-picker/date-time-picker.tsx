@@ -36,7 +36,8 @@ export function DateTimePicker({
           variant={"outline"}
           className={cn(
             "w-full justify-start text-left font-normal",
-            !date && "bg-slate-900 text-white focus:bg-slate-900 focus:text-white hover:bg-slate-900 hover:text-white",
+            !date &&
+              "bg-slate-900 text-white focus:bg-slate-900 focus:text-white hover:bg-slate-900 hover:text-white"
           )}
         >
           <CalendarIcon />
@@ -49,14 +50,21 @@ export function DateTimePicker({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 pointer-events-auto bg-slate-900 text-white border-slate-900" align="start">
+      <PopoverContent
+        className="w-auto p-0 pointer-events-auto bg-slate-900 text-white border-slate-900"
+        align="start"
+      >
         <Calendar
           mode="single"
           selected={date}
           onSelect={setDate}
-          disabled={disabled}
+          disabled={disabled} // Disable dates beyond today
+          className="bg-slate-900 text-white pointer-events-auto"
+          classNames={{
+            day_selected:
+              "bg-white text-slate-900 focus:text-slate-900 hover:text-slate-900",
+          }}
           initialFocus
-          className="bg-slate-900 text-white"
         />
         <div className="p-3 border-t border-border bg-slate-900 border-slate-900">
           <TimePicker date={date} setDate={setDate} />
