@@ -55,7 +55,7 @@ export default function Header() {
             <div className="w-12 h-12 rounded-full bg-gray-700 animate-pulse"></div>
           ) : (
             <Avatar className="w-12 h-12">
-              <AvatarImage src={user?.photoURL || undefined} />
+              <AvatarImage src={user?.photoURL || undefined} loading="lazy" />
               <AvatarFallback>
                 {user?.displayName?.charAt(0) || user?.email?.charAt(0) || "U"}
               </AvatarFallback>

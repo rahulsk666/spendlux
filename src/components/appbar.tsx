@@ -49,7 +49,7 @@ export default function AppBar() {
               width={25}
               height={25}
               className="p-1"
-              priority={activeNav === item.id}
+              priority={item.icon === "/home.svg" || activeNav === item.id}
             />
           </IconButton>
         </Link>

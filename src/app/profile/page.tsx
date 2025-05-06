@@ -11,6 +11,8 @@ import { ProfileSkeleton } from "@/components/profile-skeleton";
 export default function Profile() {
   const router = useRouter();
   const { user, loading } = useAuth();
+  console.log(user);
+  
 
   const handleLogout = async () => {
     try {
@@ -41,7 +43,7 @@ export default function Profile() {
     <div className="justify-self-center">
       <div className="rounded p-4 m-3">
         <Avatar className="w-44 h-44">
-          <AvatarImage src={user.photoURL || undefined} />
+          <AvatarImage src={user.photoURL || undefined} loading="lazy"/>
           <AvatarFallback>
             {user.displayName?.charAt(0) || user.email?.charAt(0)}
           </AvatarFallback>
