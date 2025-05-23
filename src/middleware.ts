@@ -12,28 +12,28 @@ export async function middleware(request: NextRequest) {
   }
 
   // Get the session token from cookies
-  const session = request.cookies.get('session')?.value;
+  // const session = request.cookies.get('session')?.value;
 
   // If user is on login page and has a session, redirect to home
-  if (request.nextUrl.pathname === '/login' && session) {
-    return NextResponse.redirect(new URL('/', request.url));
-  }
+  // if (request.nextUrl.pathname === '/login' && session) {
+  //   return NextResponse.redirect(new URL('/', request.url));
+  // }
 
-  // List of public routes that don't require authentication
-  const publicRoutes = ['/login'];
+  // // List of public routes that don't require authentication
+  // const publicRoutes = ['/login'];
   
-  // If it's a public route, allow access
-  if (publicRoutes.includes(request.nextUrl.pathname)) {
-    return NextResponse.next();
-  }
+  // // If it's a public route, allow access
+  // if (publicRoutes.includes(request.nextUrl.pathname)) {
+  //   return NextResponse.next();
+  // }
 
   // If there's no session, redirect to login
-  if (!session) {
-    const loginUrl = new URL('/login', request.url);
-    // Add the current URL as a redirect parameter
-    loginUrl.searchParams.set('redirect', request.nextUrl.pathname);
-    return NextResponse.redirect(loginUrl);
-  }
+  // if (!session) {
+  //   const loginUrl = new URL('/login', request.url);
+  //   // Add the current URL as a redirect parameter
+  //   loginUrl.searchParams.set('redirect', request.nextUrl.pathname);
+  //   return NextResponse.redirect(loginUrl);
+  // }
 
   // Create a response object
   const response = NextResponse.next();
@@ -59,3 +59,4 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 }; 
+
