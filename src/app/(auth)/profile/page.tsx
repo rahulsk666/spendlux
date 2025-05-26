@@ -1,0 +1,30 @@
+// "use client";
+
+import { signOut } from "./action";
+
+
+export default async function Profile() {
+  return (
+    <form className="justify-self-center">
+      <div className="rounded p-4 m-3">
+        {/* <Avatar className="w-44 h-44">
+          <AvatarImage src={user.photoURL || undefined} loading="lazy"/>
+          <AvatarFallback>
+            {user.displayName?.charAt(0) || user.email?.charAt(0)}
+          </AvatarFallback>
+        </Avatar> */}
+        <div className="pt-4 text-center font-bold text-lg">
+          {/* <span>{user.displayName || 'User'}</span> */}
+        </div>
+        <div className="pt-2 text-center text-[10px]">
+          {/* <span>{user.email}</span> */}
+        </div>
+        <div className="mt-6 p-3 px-5 text-center bg-appbar-blue rounded-full">
+          <button formAction={signOut} className="font-semibold text-xs">
+            Logout
+          </button>
+        </div>
+      </div>
+    </form>
+  );
+}

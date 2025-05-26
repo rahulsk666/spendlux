@@ -1,6 +1,5 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import ClientLayout from "./client-layout";
 import { metadata } from "./metadata";
 
 const poppins = Poppins({
@@ -11,6 +10,7 @@ const poppins = Poppins({
 
 export { metadata };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,10 +18,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} bg-background text-white overflow-y-hidden`}>
-          <ClientLayout>
-            {children}
-          </ClientLayout>
+      <body
+        className={`${poppins.variable} bg-background text-white overflow-y-hidden`}
+      >
+        <div className="md:hidden">
+          {children}
+        </div>
+        <div className="hidden md:block text-center">
+          Only Supported in mobile devices
+        </div>
       </body>
     </html>
   );

@@ -1,51 +1,37 @@
-"use client";
+// "use client";
 
 import React from "react";
 import Image from "next/image";
-// import { useRouter } from "next/navigation";
-// import { setCookie } from "cookies-next";
-
-const Login = () => {
-  // const router = useRouter();
-
-  // const handleGoogleSignIn = async () => {
-  //   try {
-  //     const user = await signInWithGoogle();
-  //     const idToken = await user.getIdToken();
-      
-  //     // Set cookie with proper options
-  //     setCookie("session", idToken, {
-  //       maxAge: 30 * 24 * 60 * 60, // 30 days
-  //       path: "/",
-  //       sameSite: "lax",
-  //       secure: process.env.NODE_ENV === "production",
-  //     });
-
-  //     // Use Next.js router with replace to prevent back-button issues
-  //     router.replace("/");
-  //   } catch (error) {
-  //     console.error("Error during sign in:", error);
-  //   }
-  // };
-
+import { handleGoogleSignIn } from "./action";
+export default async function Login() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center">
-      <div className="justify-center items-center flex">
-        <Image src="/title.png" alt="logo" width={300} height={300} />
+    <form className="min-h-screen flex flex-col justify-center items-center">
+      <div className="justify-center items-center flex w-auto h-auto">
+        <Image
+          src="/title.png"
+          alt="logo"
+          width={300}
+          height={300}
+          style={{ height: "auto" }}
+          priority
+        />
       </div>
       <button
-        onClick={() => {console.log("Google Sign In Clicked")}}
+        formAction={handleGoogleSignIn}
         className="justify-center items-center flex rounded-full bg-white text-black p-4 px-6 hover:bg-gray-100 transition-colors cursor-pointer"
       >
-        <div>
-          <Image src="/google_logo.png" alt="login" width={25} height={25} />
-        </div>
-        <div className="font-poppins font-light text-lg pl-1 pr-4">
+        <Image
+          src="/google_logo.png"
+          alt="login"
+          width={25}
+          height={25}
+          style={{ height: "auto" }}
+          priority
+        />
+        <div className="font-poppins font-light text-lg pl-1.5 pr-4">
           Sign in with Google
         </div>
       </button>
-    </div>
+    </form>
   );
-};
-
-export default Login;
+}

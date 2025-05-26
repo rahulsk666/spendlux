@@ -7,6 +7,7 @@ import { useState } from "react";
 import { AddTransactionDialog } from "@/components/add-transaction-dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+// import { createClient } from "@/utils/supabase/client";
 
 export default function Home() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -24,7 +25,7 @@ export default function Home() {
   return (
     <section className="mt-2">
       <div className="rounded">
-        <SemiCircleProgressBar 
+        <SemiCircleProgressBar
           totalAmount={30000}
           spentAmount={20000}
           safeToSpend={250}
