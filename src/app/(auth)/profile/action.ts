@@ -12,3 +12,19 @@ export async function signOut() {
   }
   return redirect("/login");
 }
+
+export async function fetchProfile() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    console.error("Error fetching user profile:", error);
+    return null;
+  }
+
+  return user;
+}
