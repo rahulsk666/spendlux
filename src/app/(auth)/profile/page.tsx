@@ -1,10 +1,10 @@
-import { fetchProfile, signOut } from "./action";
+import { fetchProfile } from "@/lib/profileActions";
+import { signOut } from "./action";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default async function Profile() {
   const user = await fetchProfile();
-  console.log("user", user);
-
+  
   return (
     <form className="justify-self-center">
       <div className="rounded p-4 m-3">
