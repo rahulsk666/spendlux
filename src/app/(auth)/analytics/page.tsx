@@ -1,6 +1,6 @@
 "use client";
 
-import SemiCircleProgressBar from "@/components/semiCircleProgressBar";
+import { SemiCircleProgressBar } from "@/components/semiCircleProgressBar";
 import { PaginationContent, PaginationEllipsis, PaginationLink } from "@/components/ui/pagination";
 import { Pagination, PaginationItem } from "@/components/ui/pagination";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,7 +13,6 @@ interface PaginationData {
 }
 
 export default function Analytics() {
-  const [activeTab, setActiveTab] = useState("daily");
   const [currentPage, setCurrentPage] = useState(1);
   
   // Test values for pagination
@@ -137,7 +136,6 @@ export default function Analytics() {
     <Tabs 
       defaultValue="daily" 
       className="w-full max-w-[380px] justify-self-center"
-      onValueChange={(value) => setActiveTab(value)}
     >
       <TabsList className="grid w-full h-[45px] grid-cols-3 rounded-full bg-pagination-background text-white">
         <TabsTrigger value="daily" className="rounded-full h-full data-[state=active]:bg-white data-[state=active]:text-black">Daily</TabsTrigger>
@@ -169,7 +167,11 @@ export default function Analytics() {
       </PaginationContent>
     </Pagination>
     <div className="rounded mt-6">
-        <SemiCircleProgressBar />
-      </div>
+      <SemiCircleProgressBar 
+        totalAmount={30000}
+        spentAmount={20000}
+        safeToSpend={250}
+      />
+    </div>
   </section>);
 }

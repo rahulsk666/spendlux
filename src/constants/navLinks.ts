@@ -8,14 +8,6 @@ export const linkItems = [
     subtitle: "your",
   },
   {
-    label: "Add New",
-    id: "create",
-    icon: "/plus.svg",
-    href: "/create",
-    title: "Transaction",
-    subtitle: "add",
-  },
-  {
     label: "Analytics",
     id: "analytics",
     icon: "/bar_chart.svg",
