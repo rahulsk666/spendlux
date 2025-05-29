@@ -28,7 +28,7 @@ interface PaginationData {
 }
 
 export default function Analytics() {
-  const [activeTab, setActiveTab] = useState("daily");
+  // const [activeTab, setActiveTab] = useState("daily");
   const [currentPage, setCurrentPage] = useState(1);
 
   // Test values for pagination
@@ -163,7 +163,7 @@ export default function Analytics() {
       <Tabs
         defaultValue="daily"
         className="w-full max-w-[380px] justify-self-center"
-        onValueChange={(value) => setActiveTab(value)}
+        // onValueChange={(value) => setActiveTab(value)}
       >
         <TabsList className="grid w-full h-[45px] grid-cols-3 rounded-full bg-pagination-background text-white">
           <TabsTrigger

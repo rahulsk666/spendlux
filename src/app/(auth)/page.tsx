@@ -7,7 +7,6 @@ import { useState } from "react";
 import { AddTransactionDialog } from "@/components/add-transaction-dialog";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-// import { createClient } from "@/utils/supabase/client";
 
 export default function Home() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
