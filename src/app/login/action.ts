@@ -17,7 +17,6 @@ export async function handleGoogleSignIn() {
     console.log(error);
   } else {
     console.log(origin,data.url);
-    
     return redirect(data.url);
   }
 }
