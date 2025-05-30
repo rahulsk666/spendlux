@@ -34,6 +34,8 @@ export async function GET(request: Request) {
         
         return NextResponse.redirect(`${origin}${next}`);
       }
+    } else {
+      console.error("Supabase exchangeCodeForSession error:", error)
     }
   }
 
