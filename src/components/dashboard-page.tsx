@@ -6,15 +6,18 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { AddTransactionDialog } from "@/components/add-transaction-dialog";
+import { ScrollArea } from "./ui/scroll-area";
 
 export default function DashboardPage() {
-   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const transactions = [
     { success: false },
     { success: true },
     { success: false },
     { success: true },
     { success: false },
+    { success: false },
+    { success: true },
     { success: false },
     { success: true },
     { success: false },
@@ -36,11 +39,13 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div>
-        {transactions.map((transaction, index) => (
-          <TransactionCard key={index} success={transaction.success} />
-        ))}
-      </div>
+      <ScrollArea className="rounded-md w-full h-svh max-w-full max-h-[60svh] md:max-h-[70svh] lg:max-h-[80svh]">
+        <div>
+          {transactions.map((transaction, index) => (
+            <TransactionCard key={index} success={transaction.success} />
+          ))}
+        </div>
+      </ScrollArea>
 
       <div className="fixed bottom-24 right-4">
         <Button

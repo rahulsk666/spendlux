@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} bg-background text-white overflow-y-hidden`}
+        className={`${poppins.variable} bg-background text-white`}
       >
         <div className="md:hidden">{children}</div>
         <div className="hidden md:block text-center">
