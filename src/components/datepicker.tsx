@@ -1,24 +1,29 @@
 "use client";
 
-import React from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Button } from "./ui/button";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "./ui/calendar";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns/format";
+import * as React from "react"
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
 
-function Datepicker() {
-  const [date, setDate] = React.useState<Date>();
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
+export function DatePicker() {
+  const [date, setDate] = React.useState<Date>()
+
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild>  
         <Button
           variant={"outline"}
           className={cn(
-            "w-[190px] justify-start text-left font-normal",
-            !date && "text-muted-foreground",
-            "rounded-full bg-input text-xs"
+            "w-[240px] justify-start text-left font-normal",
+            !date && "text-muted-foreground"
           )}
         >
           <CalendarIcon />
@@ -34,7 +39,5 @@ function Datepicker() {
         />
       </PopoverContent>
     </Popover>
-  );
+  )
 }
-
-export default Datepicker;

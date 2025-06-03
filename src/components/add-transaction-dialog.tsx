@@ -1,24 +1,16 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { useForm } from "react-hook-form";
-import { DateTimePicker } from "./date-time-picker/date-time-picker";
 import { Textarea } from "./ui/textarea";
 import {
   Select,
@@ -27,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { useEffect } from "react";
 
 export const CATEGORIES = [
   { value: "travel", label: "Travel" },
@@ -43,12 +36,12 @@ interface AddTransactionDialogProps {
 const formSchema = z.object({
   title: z.string().min(2).max(20),
   description: z.string().min(2).max(50),
-  fromDate: z.date(),
-  toDate: z.date(),
   category: z.enum(
     CATEGORIES.map((category) => category.value) as [string, ...string[]]
   ),
   amount: z.number().min(1).max(1000000),
+  // fromDate: z.date(),
+  // toDate: z.date(),
 });
 
 export function AddTransactionDialog({
@@ -63,10 +56,18 @@ export function AddTransactionDialog({
       description: "",
       amount: 0,
       category: undefined,
-      fromDate: undefined,
-      toDate: undefined,
+      // fromDate: undefined,
+      // toDate: undefined,
     },
   });
+
+  // Reset form when dialog closes
+  useEffect(() => {
+    console.log("Dialog open state changed:", open);
+    if (!open) {
+      form.reset();
+    }
+  }, [open, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -82,6 +83,9 @@ export function AddTransactionDialog({
               <DialogTitle className="text-lg font-bold text-left text-white">
                 Add New Transaction
               </DialogTitle>
+              <DialogDescription className="text-left">
+                Add Your Spend, Stay in Control.
+              </DialogDescription>
             </DialogHeader>
             <FormField
               control={form.control}
@@ -89,7 +93,11 @@ export function AddTransactionDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input className="bg-slate-900" placeholder="Enter Title" {...field} />
+                    <Input
+                      className="bg-slate-900"
+                      placeholder="Enter Title"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,12 +127,14 @@ export function AddTransactionDialog({
                 <FormItem>
                   <FormControl>
                     <Input
-                    className="bg-slate-900"
+                      className="bg-slate-900"
                       type="number"
                       placeholder="Enter Amount"
                       {...field}
                       value={field.value || ""}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
+                      onChange={(e) =>
+                        field.onChange(e.target.valueAsNumber || 0)
+                      }
                     />
                   </FormControl>
                   <FormMessage />
@@ -158,7 +168,7 @@ export function AddTransactionDialog({
               )}
             />
             {/* <div className="flex flex-row gap-1"> */}
-              <FormField
+            {/* <FormField
                 control={form.control}
                 name="fromDate"
                 render={({ field }) => (
@@ -176,8 +186,8 @@ export function AddTransactionDialog({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
-              <FormField
+              /> */}
+            {/* <FormField
                 control={form.control}
                 name="toDate"
                 render={({ field }) => (
@@ -195,9 +205,12 @@ export function AddTransactionDialog({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             {/* </div> */}
-            <Button type="submit" className="w-full bg-blue-600">
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-800 active:bg-blue-800 focus:bg-blue-800 text-white"
+            >
               Submit
             </Button>
           </form>

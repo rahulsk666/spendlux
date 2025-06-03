@@ -19,7 +19,7 @@ export default async function Login() {
         className="justify-center items-center flex rounded-full bg-white text-black p-4 px-6 hover:bg-gray-100 transition-colors cursor-pointer"
       >
         <Image
-          src="/google_logo.png"
+          src="/google_logo.webp"
           alt="login"
           width={25}
           height={25}

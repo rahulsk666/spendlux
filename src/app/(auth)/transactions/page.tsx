@@ -210,9 +210,9 @@ export default function Analytics() {
         </PaginationContent>
       </Pagination>
       <div>
-        {transactions.map((transaction, index) => (
-          <TransactionCard key={index} success={transaction.success} />
-        ))}
+        {/* {transactions.map((transaction) => (
+          <TransactionCard key={transaction.id} transaction={transaction} />
+        ))} */}
       </div>
     </section>
   );

@@ -12,8 +12,6 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import {
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
 } from "@/components/ui/chart";
 import { chartConfig } from "@/constants/chartConstants";
 
@@ -26,8 +24,8 @@ interface SemiCircleProgressBarProps {
 
 interface ChartDataItem {
   name: string;
-  mobile: number;
-  desktop: number;
+  safeToSpend: number;
+  spentAmount: number;
 }
 
 export function SemiCircleProgressBar({
@@ -37,12 +35,14 @@ export function SemiCircleProgressBar({
   className,
 }: SemiCircleProgressBarProps) {
   const percentage = Math.round((spentAmount / totalAmount) * 100);
+  const spendAmountPercent = Math.round((safeToSpend / totalAmount) * 100);
+  console.log(spendAmountPercent);
 
   const chartData: ChartDataItem[] = [
     {
       name: "Progress",
-      mobile: percentage * 0.4, // Background layer
-      desktop: percentage * 0.6, // Foreground layer
+      safeToSpend: 100 - spendAmountPercent, // Background layer
+      spentAmount: spendAmountPercent, // Foreground layer
     },
   ];
 
@@ -66,10 +66,6 @@ export function SemiCircleProgressBar({
               width={250}
               height={250}
             >
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
-              />
               <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
                 <Label
                   content={({ viewBox }) => {
@@ -97,14 +93,21 @@ export function SemiCircleProgressBar({
                             y={centerY - 15}
                             className="fill-white text-lg font-bold"
                           >
-                            $ {spentAmount.toLocaleString()}
+                            &#8377; {spentAmount.toLocaleString()}
                           </tspan>
                           <tspan
-                            x={centerX}
+                            x={centerX - 15}
                             y={centerY + 5}
                             className="fill-white text-[10px] font-light"
                           >
-                            of ${totalAmount.toLocaleString()}
+                            of
+                          </tspan>
+                          <tspan
+                            x={centerX + 12}
+                            y={centerY + 5}
+                            className="fill-white text-[10px] font-bold"
+                          >
+                            &#8377; {totalAmount.toLocaleString()}
                           </tspan>
                           <tspan
                             x={centerX - 30}
@@ -116,9 +119,9 @@ export function SemiCircleProgressBar({
                           <tspan
                             x={centerX + 30}
                             y={centerY + 40}
-                            className="fill-white text-lg font-bold"
+                            className="fill-white text-base font-bold"
                           >
-                            $ {safeToSpend.toLocaleString()}
+                            &#8377; {safeToSpend.toLocaleString()}
                           </tspan>
                         </text>
                       );
@@ -128,27 +131,39 @@ export function SemiCircleProgressBar({
                 />
               </PolarRadiusAxis>
               <defs>
-                <linearGradient id="fillDesktop" x1="1" y1="1" x2="0" y2="1">
+                <linearGradient
+                  id="fillSafeToSpend"
+                  x1="1"
+                  y1="1"
+                  x2="0"
+                  y2="1"
+                >
                   <stop offset="50%" stopColor="#7EFF64" stopOpacity={1} />
                   <stop offset="100%" stopColor="#00BA16" stopOpacity={0.9} />
                 </linearGradient>
-                <linearGradient id="fillMobile" x1="0" y1="1" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#02620d" stopOpacity={0.9} />
-                  <stop offset="100%" stopColor="#1b8506" stopOpacity={0.9} />
+                <linearGradient
+                  id="fillSpentAmount"
+                  x1="0"
+                  y1="1"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop offset="0%" stopColor="#7f1d1d" stopOpacity={0.95} />
+                  <stop offset="100%" stopColor="#991b1b" stopOpacity={0.95} />
                 </linearGradient>
               </defs>
               <RadialBar
-                dataKey="mobile"
-                fill="url(#fillMobile)"
+                dataKey="safeToSpend"
+                fill="url(#fillSafeToSpend)"
                 stackId="a"
                 cornerRadius={5}
                 className="stroke-transparent stroke-2"
               />
               <RadialBar
-                dataKey="desktop"
+                dataKey="spentAmount"
                 stackId="a"
-                cornerRadius={7}
-                fill="url(#fillDesktop)"
+                cornerRadius={5}
+                fill="url(#fillSpentAmount)"
                 className="stroke-transparent stroke-2"
               />
             </RadialBarChart>

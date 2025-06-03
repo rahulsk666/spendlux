@@ -23,7 +23,7 @@ export default function AppBar() {
   }, [pathName]);
 
   return (
-    <nav 
+    <nav
       className="fixed bottom-2 bg-appbar-primary inset-x-0 flex flex-row rounded-full justify-self-center p-2"
       role="navigation"
       aria-label="Main navigation"
@@ -49,7 +49,8 @@ export default function AppBar() {
               width={25}
               height={25}
               className="p-1"
-              priority={item.icon === "/home.svg" || activeNav === item.id}
+              priority={activeNav === item.id}
+              loading={activeNav === item.id ? "eager" : "lazy"}
             />
           </IconButton>
         </Link>

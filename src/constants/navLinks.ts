@@ -5,7 +5,6 @@ export const linkItems = [
     icon: "/home.svg",
     href: "/",
     title: "Dashboard",
-    subtitle: "your",
   },
   {
     label: "Analytics",
@@ -13,7 +12,6 @@ export const linkItems = [
     icon: "/bar_chart.svg",
     href: "/analytics",
     title: "Analytics",
-    subtitle: "your",
   },
   {
     label: "All Transactions",
@@ -21,6 +19,5 @@ export const linkItems = [
     icon: "/list.svg",
     href: "/transactions",
     title: "Transactions",
-    subtitle: "all",
   },
 ];

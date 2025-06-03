@@ -1,34 +1,40 @@
 "use client";
+
 import Link from "next/link";
 import { SemiCircleProgressBar } from "@/components/semiCircleProgressBar";
 import TransactionCard from "@/components/transactionCard";
-import { useState } from "react";
+import { use, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { AddTransactionDialog } from "@/components/add-transaction-dialog";
 import { ScrollArea } from "./ui/scroll-area";
 
-export default function DashboardPage() {
+type Transaction = {
+  id: number;
+  title: string;
+  description: string;
+  amount: number;
+  type: string;
+  category_id: number;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type DashboardPageProps = {
+  transaction: Promise<Transaction[]>;
+};
+
+export default function DashboardPage({ transaction }: DashboardPageProps) {
+  const transactions = use(transaction);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const transactions = [
-    { success: false },
-    { success: true },
-    { success: false },
-    { success: true },
-    { success: false },
-    { success: false },
-    { success: true },
-    { success: false },
-    { success: true },
-    { success: false },
-  ];
   return (
     <>
       <div className="rounded">
         <SemiCircleProgressBar
           totalAmount={30000}
-          spentAmount={20000}
-          safeToSpend={250}
+          spentAmount={10000}
+          safeToSpend={10000}
         />
       </div>
 
@@ -41,8 +47,8 @@ export default function DashboardPage() {
 
       <ScrollArea className="rounded-md w-full h-svh max-w-full max-h-[60svh] md:max-h-[70svh] lg:max-h-[80svh]">
         <div>
-          {transactions.map((transaction, index) => (
-            <TransactionCard key={index} success={transaction.success} />
+          {transactions.map((transaction) => (
+            <TransactionCard key={transaction.id} transaction={transaction} />
           ))}
         </div>
       </ScrollArea>
@@ -55,7 +61,7 @@ export default function DashboardPage() {
           <Plus className="h-6 w-6" />
         </Button>
       </div>
-
+      
       <AddTransactionDialog
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
