@@ -13,7 +13,6 @@ export default function HeaderPage({ user }: HeaderPageTypes) {
   const pathName = usePathname();
   const [pageName, setPageName] = useState({
     title: "",
-    subtitle: "",
   });
 
   useEffect(() => {
@@ -21,12 +20,10 @@ export default function HeaderPage({ user }: HeaderPageTypes) {
       if (items.href == pathName) {
         setPageName({
           title: items.title,
-          subtitle: items.subtitle,
         });
       } else if ("/profile" == pathName) {
         setPageName({
           title: "Profile",
-          subtitle: "your",
         });
       }
     });
@@ -41,7 +38,7 @@ export default function HeaderPage({ user }: HeaderPageTypes) {
           </span>
         </p>
         <p>
-          {pageName.subtitle}
+          your
           <span className="font-bold text-lg pl-2">{pageName.title}</span>
         </p>
       </div>
