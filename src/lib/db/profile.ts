@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 
 export async function getProfile(userId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase.auth.getUser(userId);
 
@@ -9,5 +9,5 @@ export async function getProfile(userId: string) {
     return { error: error.message, data: null };
   }
 
-  return { data, error: error ? error.message : null };
+  return { data, error: null };
 }

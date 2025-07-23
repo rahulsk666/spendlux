@@ -1,24 +1,29 @@
+// import { getUserFiles } from "@/lib/db/files";
+import { getAuthenticatedUser } from "@/lib/auth";
+import { getTransactions } from "@/lib/db/transactions";
+import { NextRequest, NextResponse } from "next/server";
 
-// // import { getUserFiles } from "@/lib/db/files";
-// import { createClient } from "@/utils/supabase/server";
-// import { NextResponse } from "next/server";
+export async function GET(request: NextRequest) {
+  const user = await getAuthenticatedUser();
+  const { searchParams } = request.nextUrl;
 
-// export async function GET() {
-//   const supabase = createClient();
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "10");
+  const groupBy = searchParams.get("groupBy") || "daily";
 
-//   const {
-//     data: { user },
-//   } = (await supabase).auth.getUser();
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-//   if (!user) {
-//     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-//   }
+  const { transactions, totalItems, error } = await getTransactions(
+    page,
+    limit,
+    groupBy
+  );
 
-//   const { data, error } = await getUserFiles(user.id);
+  if (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
 
-//   if (error) {
-//     return NextResponse.json({ error }, { status: 500 });
-//   }
-
-//   return NextResponse.json({ files: data });
-// }
+  return NextResponse.json({ transactions, totalItems }, { status: 200 });
+}
