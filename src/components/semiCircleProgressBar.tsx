@@ -36,7 +36,6 @@ export function SemiCircleProgressBar({
 }: SemiCircleProgressBarProps) {
   const percentage = Math.round((spentAmount / totalAmount) * 100);
   const spendAmountPercent = Math.round((safeToSpend / totalAmount) * 100);
-  console.log(spendAmountPercent);
 
   const chartData: ChartDataItem[] = [
     {

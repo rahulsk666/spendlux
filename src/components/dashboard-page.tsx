@@ -61,7 +61,7 @@ export default function DashboardPage({ transaction }: DashboardPageProps) {
           <Plus className="h-6 w-6" />
         </Button>
       </div>
-      
+
       <AddTransactionDialog
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}

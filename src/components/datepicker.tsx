@@ -1,43 +1,56 @@
 "use client";
+import React from "react";
+import { ConfigProvider, DatePicker, Space, Typography } from "antd";
+import type { DatePickerProps } from "antd";
+import en from "antd/es/date-picker/locale/en_US";
+import enUS from "antd/es/locale/en_US";
+import dayjs from "dayjs";
+import buddhistEra from "dayjs/plugin/buddhistEra";
 
-import * as React from "react"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+dayjs.extend(buddhistEra);
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+const { Title } = Typography;
 
-export function DatePicker() {
-  const [date, setDate] = React.useState<Date>()
+// Component level locale
+const buddhistLocale: typeof en = {
+  ...en,
+  lang: {
+    ...en.lang,
+    fieldDateFormat: "BBBB-MM-DD",
+    fieldDateTimeFormat: "BBBB-MM-DD HH:mm:ss",
+    yearFormat: "BBBB",
+    cellYearFormat: "BBBB",
+  },
+};
+
+// ConfigProvider level locale
+const globalBuddhistLocale: typeof enUS = {
+  ...enUS,
+  DatePicker: {
+    ...enUS.DatePicker!,
+    lang: buddhistLocale.lang,
+  },
+};
+
+const defaultValue = dayjs("2024-01-01");
+
+const DatePickerComponent: React.FC = () => {
+  const onChange: DatePickerProps["onChange"] = (_, dateStr) => {
+    console.log("onChange:", dateStr);
+  };
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>  
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-[240px] justify-start text-left font-normal",
-            !date && "text-muted-foreground"
-          )}
-        >
-          <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          initialFocus
-        />
-      </PopoverContent>
-    </Popover>
-  )
-}
+    <Space direction="vertical">
+      <Title level={4}>By locale props</Title>
+      <DatePicker
+        className=""
+        defaultValue={defaultValue}
+        showTime
+        locale={buddhistLocale}
+        onChange={onChange}
+      />
+    </Space>
+  );
+};
+
+export default DatePickerComponent;

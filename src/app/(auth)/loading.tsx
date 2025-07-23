@@ -3,7 +3,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function Loading() {
   return (
     <div className="space-y-4 p-4">
-
       {/* Content Area Skeleton */}
       <div className="space-y-4">
         <Skeleton className="h-52 w-full rounded" />

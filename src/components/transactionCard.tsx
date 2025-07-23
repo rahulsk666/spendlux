@@ -33,8 +33,8 @@ export default function transactionCard({ transaction }: transactionCardTypes) {
         <div className="flex flex-row pt-1 pb-1">
           <div className="rounded-full justify-start align-middle p-4 bg-gradient-to-r from-card-gradient-6 to-card-gradient-7">
             <Image
-              src={`/currency_dollar.svg`}
-              alt="dollar"
+              src={`/currency_rupee.svg`}
+              alt="rupee"
               width={30}
               height={30}
               style={{ width: "auto" }}
@@ -49,7 +49,7 @@ export default function transactionCard({ transaction }: transactionCardTypes) {
           </div>
           <div className="content-center p-2">
             <span className={`${textColor} font-light text-lg`}>
-              &#8377;  {transaction.amount}
+              &#8377; {transaction.amount}
             </span>
           </div>
         </div>

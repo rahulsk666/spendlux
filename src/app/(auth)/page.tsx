@@ -3,7 +3,7 @@ import { getTransactions } from "@/lib/transactionActions";
 import { Suspense } from "react";
 import Loading from "./loading";
 
-export default function Home() {
+export default async function Home() {
   const transactions = getTransactions();
 
   return (

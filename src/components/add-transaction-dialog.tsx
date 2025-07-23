@@ -19,13 +19,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { useEffect } from "react";
-
-export const CATEGORIES = [
-  { value: "travel", label: "Travel" },
-  { value: "food", label: "Food" },
-  { value: "house", label: "Housing" },
-];
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface AddTransactionDialogProps {
   open: boolean;
@@ -33,45 +29,100 @@ interface AddTransactionDialogProps {
   className?: string;
 }
 
-const formSchema = z.object({
-  title: z.string().min(2).max(20),
-  description: z.string().min(2).max(50),
-  category: z.enum(
-    CATEGORIES.map((category) => category.value) as [string, ...string[]]
-  ),
-  amount: z.number().min(1).max(1000000),
-  // fromDate: z.date(),
-  // toDate: z.date(),
-});
-
 export function AddTransactionDialog({
   open,
   onOpenChange,
   className,
 }: AddTransactionDialogProps) {
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>(
+    []
+  );
+  const router = useRouter();
+
+  const formSchema = useMemo(() => {
+    return z.object({
+      title: z.string().min(2).max(20),
+      description: z.string().min(2).max(50),
+      category: z
+        .string()
+        .refine((val) => categories.map((c) => String(c.id)).includes(val), {
+          message: "Invalid category selected",
+        }),
+      amount: z.number().min(1).max(1000000),
+      type: z.enum(["expense", "income"]),
+    });
+  }, [categories]);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       description: "",
       amount: 0,
-      category: undefined,
+      category: "",
+      type: "expense",
       // fromDate: undefined,
       // toDate: undefined,
     },
   });
 
+  useEffect(() => {
+    const loadCategory = async () => {
+      const res = await fetch("/api/category");
+      const { data } = await res.json();
+      setCategories(data);
+    };
+
+    loadCategory();
+  }, []);
+
   // Reset form when dialog closes
   useEffect(() => {
-    console.log("Dialog open state changed:", open);
     if (!open) {
       form.reset();
     }
   }, [open, form]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    onOpenChange(false);
+    toast.promise(
+      (async () => {
+        const res = await fetch("/api/transactions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          throw new Error(
+            result.error?.message || "Failed to add transaction."
+          );
+        }
+
+        form.reset();
+        router.push("/");
+
+        return result.data;
+      })(),
+      {
+        loading: "Adding transaction...",
+        success: "Transaction added successfully!",
+        error: (err: Error) => err.message || "Failed to add transaction.",
+      },
+      {
+        style: {
+          borderRadius: "10px",
+          background: "#242A3D",
+          color: "#fff",
+        },
+      }
+    );
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -143,7 +194,7 @@ export function AddTransactionDialog({
             />
             <FormField
               control={form.control}
-              name="category"
+              name="type"
               render={({ field }) => (
                 <FormItem>
                   <Select
@@ -152,13 +203,43 @@ export function AddTransactionDialog({
                   >
                     <FormControl>
                       <SelectTrigger className=" bg-slate-900 text-white">
+                        <SelectValue placeholder="Select a type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="bg-slate-900 text-white">
+                      <SelectItem key="expense" value="expense">
+                        Expense
+                      </SelectItem>
+                      <SelectItem key="income" value="income">
+                        Income
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <Select
+                    onValueChange={(val) => field.onChange(val)}
+                    defaultValue={field.value?.toString()}
+                  >
+                    <FormControl>
+                      <SelectTrigger className=" bg-slate-900 text-white">
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="bg-slate-900 text-white">
-                      {CATEGORIES.map((category) => (
-                        <SelectItem key={category.value} value={category.value}>
-                          {category.label}
+                      {categories.map((category) => (
+                        <SelectItem
+                          key={category.id}
+                          value={String(category.id)}
+                        >
+                          {category.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -167,10 +248,10 @@ export function AddTransactionDialog({
                 </FormItem>
               )}
             />
-            {/* <div className="flex flex-row gap-1"> */}
-            {/* <FormField
+            {/* <div className="flex flex-row gap-1">
+              <FormField
                 control={form.control}
-                name="fromDate"
+                name='fromDate'
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -186,10 +267,10 @@ export function AddTransactionDialog({
                     <FormMessage />
                   </FormItem>
                 )}
-              /> */}
-            {/* <FormField
+              />
+              <FormField
                 control={form.control}
-                name="toDate"
+                name='toDate'
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -205,8 +286,8 @@ export function AddTransactionDialog({
                     <FormMessage />
                   </FormItem>
                 )}
-              /> */}
-            {/* </div> */}
+              />
+            </div> */}
             <Button
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-800 active:bg-blue-800 focus:bg-blue-800 text-white"
