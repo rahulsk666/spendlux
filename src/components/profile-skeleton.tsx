@@ -1,4 +1,4 @@
-export function ProfileSkeleton() {
+export default function ProfileSkeleton() {
   return (
     <div className="justify-self-center">
       <div className="rounded p-4 m-3">
