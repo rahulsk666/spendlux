@@ -8,7 +8,9 @@ export const getTransactions = async () => {
   const { data, error } = await supabase
     .from("expenses")
     .select("*")
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(6);
 
   if (error) {
     console.error("Supabase error fetching transactions:", error);

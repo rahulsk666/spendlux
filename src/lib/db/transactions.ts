@@ -22,7 +22,8 @@ export const getTransactions = async (
     .from("expenses")
     .select("*", { count: "exact" }) // count: "exact" fetches total rows
     .eq("user_id", user.id)
-    .range(from, to);
+    .range(from, to)
+    .order("created_at", { ascending: false });
 
   return {
     transactions: data || [],
