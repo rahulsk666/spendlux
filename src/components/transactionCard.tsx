@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
+import { formatRelativeDate } from "@/lib/formatDate";
 
 export interface transactionCardTypes {
   transaction: {
@@ -45,7 +46,10 @@ export default function transactionCard({ transaction }: transactionCardTypes) {
             <span className="font-light text-[10px]">
               {transaction.description}
             </span>
-            <span className="font-extralight text-[8px]">September 21</span>
+            <span className="font-extralight text-[8px]">
+              {formatRelativeDate(transaction.created_at)}
+              {/* {formatDate(transaction.created_at)} */}
+            </span>
           </div>
           <div className="content-center p-2">
             <span className={`${textColor} font-light text-lg`}>

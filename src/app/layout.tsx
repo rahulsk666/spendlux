@@ -20,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} bg-background text-white`}>
-         <Toaster position="bottom-center" />
+        <Toaster position="bottom-center" />
         <AuthListener /> {/* Read auth changes*/}
         <div className="md:hidden">{children}</div>
         <div className="hidden md:block text-center">

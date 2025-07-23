@@ -8,33 +8,27 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { AddTransactionDialog } from "@/components/add-transaction-dialog";
 import { ScrollArea } from "./ui/scroll-area";
-
-type Transaction = {
-  id: number;
-  title: string;
-  description: string;
-  amount: number;
-  type: string;
-  category_id: number;
-  user_id: string;
-  created_at: string;
-  updated_at: string;
-};
+import { transactionType } from "@/lib/types";
 
 type DashboardPageProps = {
-  transaction: Promise<Transaction[]>;
+  data: Promise<{
+    transactions: transactionType[];
+    totalIncome: number;
+    totalExpense: number;
+    safeToSpend: number;
+  }>;
 };
 
-export default function DashboardPage({ transaction }: DashboardPageProps) {
-  const transactions = use(transaction);
+export default function DashboardPage({ data }: DashboardPageProps) {
+  const { transactions, totalIncome, totalExpense, safeToSpend } = use(data);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   return (
     <>
       <div className="rounded">
         <SemiCircleProgressBar
-          totalAmount={30000}
-          spentAmount={10000}
-          safeToSpend={10000}
+          totalAmount={totalIncome}
+          spentAmount={totalExpense}
+          safeToSpend={safeToSpend}
         />
       </div>
 

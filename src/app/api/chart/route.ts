@@ -9,7 +9,8 @@ export async function GET(request: NextRequest) {
 
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const groupBy = searchParams.get("groupBy") || "daily";
+  const groupBy =
+    (searchParams.get("groupBy") as "daily" | "monthly" | "yearly") || "daily";
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

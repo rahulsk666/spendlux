@@ -40,8 +40,8 @@ export function SemiCircleProgressBar({
   const chartData: ChartDataItem[] = [
     {
       name: "Progress",
-      safeToSpend: 100 - spendAmountPercent, // Background layer
-      spentAmount: spendAmountPercent, // Foreground layer
+      safeToSpend: spendAmountPercent, // Background layer
+      spentAmount: 100 - spendAmountPercent, // Foreground layer
     },
   ];
 

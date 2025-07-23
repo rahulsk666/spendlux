@@ -25,9 +25,13 @@ export const TransactionPagination = () => {
   );
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    console.log(`Active tab changed to: ${activeTab}`);
-  }, [activeTab]);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    setCurrentPage(1); // Reset to first page when tab changes
+    setPaginationData(null); // Clear previous data
+    setTotalPages(0); // Reset total pages
+  };
 
   useEffect(() => {
     const loadTransactions = async () => {
@@ -167,7 +171,7 @@ export const TransactionPagination = () => {
       <Tabs
         defaultValue="daily"
         className="w-full max-w-[380px] justify-self-center"
-        onValueChange={(value) => setActiveTab(value)}
+        onValueChange={handleTabChange}
       >
         <TabsList className="grid w-full h-[45px] grid-cols-3 rounded-full bg-pagination-background text-white">
           <TabsTrigger

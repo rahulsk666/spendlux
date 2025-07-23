@@ -1,15 +1,16 @@
 import DashboardPage from "@/components/dashboard-page";
-import { getTransactions } from "@/lib/transactionActions";
+// import { getTransactions } from "@/lib/transactionActions";
 import { Suspense } from "react";
 import Loading from "./loading";
+import { getTransactions } from "@/lib/db/transactions";
 
 export default async function Home() {
-  const transactions = getTransactions();
+  const data = getTransactions();
 
   return (
     <section className="mt-2">
       <Suspense fallback={<Loading />}>
-        <DashboardPage transaction={transactions} />
+        <DashboardPage data={data} />
       </Suspense>
     </section>
   );
