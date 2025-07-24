@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function AuthCodeErrorPage() {
@@ -23,5 +23,5 @@ export default function AuthCodeErrorPage() {
     }
   }, [router]);
 
-  return null; // or a loader/spinner
+  redirect("/login"); // or a loader/spinner
 }

@@ -41,9 +41,15 @@ export default function DashboardPage({ data }: DashboardPageProps) {
 
       <ScrollArea className="rounded-md w-full h-svh max-w-full max-h-[60svh] md:max-h-[70svh] lg:max-h-[80svh]">
         <div>
-          {transactions.map((transaction) => (
-            <TransactionCard key={transaction.id} transaction={transaction} />
-          ))}
+          {transactions && transactions.length > 0 ? (
+            transactions.map((transaction) => (
+              <TransactionCard key={transaction.id} transaction={transaction} />
+            ))
+          ) : (
+            <div className="text-white text-center py-4">
+              No transactions found.
+            </div>
+          )}
         </div>
       </ScrollArea>
 

@@ -9,7 +9,8 @@ import {
 import { Pagination, PaginationItem } from "@/components/ui/pagination";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import Loading from "../loading";
 
 interface PaginationData {
   totalItems: number;
@@ -148,61 +149,63 @@ export default function Analytics() {
 
   return (
     <section className="mt-2">
-      <Tabs
-        defaultValue="daily"
-        className="w-full max-w-[380px] justify-self-center"
-      >
-        <TabsList className="grid w-full h-[45px] grid-cols-3 rounded-full bg-pagination-background text-white">
-          <TabsTrigger
-            value="daily"
-            className="rounded-full h-full data-[state=active]:bg-white data-[state=active]:text-black"
-          >
-            Daily
-          </TabsTrigger>
-          <TabsTrigger
-            value="monthly"
-            className="rounded-full h-full data-[state=active]:bg-white data-[state=active]:text-black"
-          >
-            Monthly
-          </TabsTrigger>
-          <TabsTrigger
-            value="yearly"
-            className="rounded-full h-full data-[state=active]:bg-white data-[state=active]:text-black"
-          >
-            Yearly
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
-      <Pagination className="mt-3 max-w-[380px] justify-self-center">
-        <PaginationContent className="justify-center bg-appbar-primary rounded-full">
-          <PaginationItem className="">
-            <PaginationLink
-              href="#"
-              className="text-white rounded-full hover:bg-pagination-background hover:text-white"
-              onClick={handlePrevClick}
+      <Suspense fallback={<Loading />}>
+        <Tabs
+          defaultValue="daily"
+          className="w-full max-w-[380px] justify-self-center"
+        >
+          <TabsList className="grid w-full h-[45px] grid-cols-3 rounded-full bg-pagination-background text-white">
+            <TabsTrigger
+              value="daily"
+              className="rounded-full h-full data-[state=active]:bg-white data-[state=active]:text-black"
             >
-              <ChevronLeft className="h-4 w-4" />
-            </PaginationLink>
-          </PaginationItem>
-          {renderPaginationItems()}
-          <PaginationItem>
-            <PaginationLink
-              href="#"
-              className="text-white rounded-full hover:bg-pagination-background hover:text-white"
-              onClick={handleNextClick}
+              Daily
+            </TabsTrigger>
+            <TabsTrigger
+              value="monthly"
+              className="rounded-full h-full data-[state=active]:bg-white data-[state=active]:text-black"
             >
-              <ChevronRight className="h-4 w-4" />
-            </PaginationLink>
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-      <div className="rounded mt-6">
-        <SemiCircleProgressBar
-          totalAmount={30000}
-          spentAmount={20000}
-          safeToSpend={10000}
-        />
-      </div>
+              Monthly
+            </TabsTrigger>
+            <TabsTrigger
+              value="yearly"
+              className="rounded-full h-full data-[state=active]:bg-white data-[state=active]:text-black"
+            >
+              Yearly
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+        <Pagination className="mt-3 max-w-[380px] justify-self-center">
+          <PaginationContent className="justify-center bg-appbar-primary rounded-full">
+            <PaginationItem className="">
+              <PaginationLink
+                href="#"
+                className="text-white rounded-full hover:bg-pagination-background hover:text-white"
+                onClick={handlePrevClick}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </PaginationLink>
+            </PaginationItem>
+            {renderPaginationItems()}
+            <PaginationItem>
+              <PaginationLink
+                href="#"
+                className="text-white rounded-full hover:bg-pagination-background hover:text-white"
+                onClick={handleNextClick}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </PaginationLink>
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+        <div className="rounded mt-6">
+          <SemiCircleProgressBar
+            totalAmount={30000}
+            spentAmount={10000}
+            safeToSpend={20000}
+          />
+        </div>
+      </Suspense>
     </section>
   );
 }
