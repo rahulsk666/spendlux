@@ -15,7 +15,9 @@ import { Textarea } from "./ui/textarea";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
@@ -206,13 +208,16 @@ export function AddTransactionDialog({
                         <SelectValue placeholder="Select a type" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="bg-slate-900 text-white">
-                      <SelectItem key="expense" value="expense">
-                        Expense
-                      </SelectItem>
-                      <SelectItem key="income" value="income">
-                        Income
-                      </SelectItem>
+                    <SelectContent className="bg-slate-900 text-white border-slate-900">
+                      <SelectGroup>
+                        <SelectLabel>Transaction Type</SelectLabel>
+                        <SelectItem key="expense" value="expense">
+                          Expense
+                        </SelectItem>
+                        <SelectItem key="income" value="income">
+                          Income
+                        </SelectItem>
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -229,19 +234,22 @@ export function AddTransactionDialog({
                     defaultValue={field.value?.toString()}
                   >
                     <FormControl>
-                      <SelectTrigger className=" bg-slate-900 text-white">
+                      <SelectTrigger className=" bg-slate-900 text-white mb-3">
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent className="bg-slate-900 text-white">
-                      {categories.map((category) => (
-                        <SelectItem
-                          key={category.id}
-                          value={String(category.id)}
-                        >
-                          {category.name}
-                        </SelectItem>
-                      ))}
+                    <SelectContent className="bg-slate-900 text-white border-slate-900">
+                      <SelectGroup>
+                        <SelectLabel>Transaction Category</SelectLabel>
+                        {categories.map((category) => (
+                          <SelectItem
+                            key={category.id}
+                            value={String(category.id)}
+                          >
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                   <FormMessage />
