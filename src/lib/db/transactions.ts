@@ -80,6 +80,7 @@ export async function createTransaction(transaction: {
   category: string;
   amount: number;
   type: "expense" | "income";
+  date: string;
   user_id: string;
 }) {
   const supabase = await createClient();
@@ -89,6 +90,7 @@ export async function createTransaction(transaction: {
     description: transaction.description,
     amount: transaction.amount,
     type: transaction.type,
+    created_at: transaction.date,
     user_id: transaction.user_id,
     category_id: Number(transaction.category),
   };

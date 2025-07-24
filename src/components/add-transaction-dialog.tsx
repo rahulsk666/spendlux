@@ -24,6 +24,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { DateTimePicker } from "./date-time-picker";
 
 interface AddTransactionDialogProps {
   open: boolean;
@@ -52,6 +53,7 @@ export function AddTransactionDialog({
         }),
       amount: z.number().min(1).max(1000000),
       type: z.enum(["expense", "income"]),
+      date: z.date().min(new Date("1900-01-01")),
     });
   }, [categories]);
 
@@ -63,8 +65,7 @@ export function AddTransactionDialog({
       amount: 0,
       category: "",
       type: "expense",
-      // fromDate: undefined,
-      // toDate: undefined,
+      date: new Date(),
     },
   });
 
@@ -104,7 +105,6 @@ export function AddTransactionDialog({
             result.error?.message || "Failed to add transaction."
           );
         }
-
         form.reset();
         router.push("/");
 
@@ -196,6 +196,25 @@ export function AddTransactionDialog({
             />
             <FormField
               control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <DateTimePicker
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="Select Date"
+                      disabled={(date) =>
+                        date > new Date() || date < new Date("2000-01-01")
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="type"
               render={({ field }) => (
                 <FormItem>
@@ -256,46 +275,6 @@ export function AddTransactionDialog({
                 </FormItem>
               )}
             />
-            {/* <div className="flex flex-row gap-1">
-              <FormField
-                control={form.control}
-                name='fromDate'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <DateTimePicker
-                        placeholder="Expenses from.."
-                        date={field.value}
-                        setDate={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name='toDate'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <DateTimePicker
-                        placeholder="Expenses to.."
-                        date={field.value}
-                        setDate={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div> */}
             <Button
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-800 active:bg-blue-800 focus:bg-blue-800 text-white"

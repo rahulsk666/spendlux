@@ -10,6 +10,7 @@ const transactionSchema = z.object({
   category: z.string().min(1, "Category is required"),
   amount: z.number().min(1).max(1000000),
   type: z.enum(["expense", "income"]),
+  date: z.string(),
 });
 
 export async function GET(request: NextRequest) {
@@ -19,7 +20,8 @@ export async function GET(request: NextRequest) {
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
   const groupBy =
-    (searchParams.get("groupBy") as "daily" | "monthly" | "yearly") || "monthly";
+    (searchParams.get("groupBy") as "daily" | "monthly" | "yearly") ||
+    "monthly";
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
