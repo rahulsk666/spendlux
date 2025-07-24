@@ -12,7 +12,7 @@ export async function fetchProfile() {
 
   if (error) {
     console.error("Error fetching user profile:", error);
-    throw new Error("Failed to fetch user profile");
+    // return { error: "Failed to fetch user profile" };
   }
 
   return user;

@@ -29,9 +29,9 @@ interface ChartDataItem {
 }
 
 export function SemiCircleProgressBar({
-  totalAmount,
-  spentAmount,
-  safeToSpend,
+  totalAmount = 30000,
+  spentAmount = 10000,
+  safeToSpend = 20000,
   className,
 }: SemiCircleProgressBarProps) {
   const percentage = Math.round((spentAmount / totalAmount) * 100);
