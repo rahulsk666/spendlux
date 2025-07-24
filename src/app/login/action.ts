@@ -6,7 +6,7 @@ export async function handleGoogleSignIn() {
   "use server";
   const supabase = await createClient();
   const origin = (await headers()).get("origin") || process.env.NEXT_PUBLIC_URL;
-  
+
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
@@ -14,7 +14,9 @@ export async function handleGoogleSignIn() {
     },
   });
   if (error) {
-    console.log(error);
+    console.error("Error during Google sign-in:", error);
+    // Handle error appropriately, e.g., show a message to the user
+    return;
   } else {
     return redirect(data.url);
   }

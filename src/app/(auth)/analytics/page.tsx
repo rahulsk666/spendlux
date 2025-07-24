@@ -32,25 +32,17 @@ export default function Analytics() {
 
   const handlePageClick = (page: number) => {
     setCurrentPage(page);
-    // Here you would fetch the data for the new page
-    console.log(
-      `Fetching page ${page} with ${paginationData.itemsPerPage} items per page`
-    );
   };
 
   const handlePrevClick = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      // Here you would fetch the data for the previous page
-      console.log(`Fetching previous page ${currentPage - 1}`);
     }
   };
 
   const handleNextClick = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      // Here you would fetch the data for the next page
-      console.log(`Fetching next page ${currentPage + 1}`);
     }
   };
 
