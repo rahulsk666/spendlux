@@ -13,7 +13,7 @@ import { transactionType } from "../types";
 export const getTransactions = async (
   currentPage: number = 1,
   limit: number = 10,
-  groupBy: "daily" | "monthly" | "yearly" = "daily"
+  groupBy: "daily" | "monthly" | "yearly" = "monthly"
 ): Promise<{
   transactions: transactionType[];
   totalIncome: number;
@@ -63,8 +63,6 @@ export const getTransactions = async (
       totalExpense += transaction.amount;
     }
   });
-
-  console.log(totalIncome, totalExpense);
 
   return {
     transactions: data || [],

@@ -1,12 +1,22 @@
 import React from "react";
 import Image from "next/image";
 import { handleGoogleSignIn } from "./action";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 export default async function Login() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    redirect("/"); // ✅ avoid landing on login again
+  }
   return (
     <form className="min-h-screen flex flex-col justify-center items-center">
       <div className="justify-center items-center flex w-auto h-auto">
         <Image
-          src="/title.png"
+          src="/spendlux-title.webp"
           alt="logo"
           width={300}
           height={300}
